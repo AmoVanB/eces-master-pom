@@ -21,14 +21,14 @@
          commons project. Hence, the loop is removed. -->
     <dependencies>
         <dependency>
-            <groupId>de.tum.ei.lkn</groupId>
+            <groupId>de.tum.ei.lkn.eces</groupId>
             <artifactId>master-commons</artifactId>
             <version>1.0.19</version>
         </dependency>
         <dependency>
             <!-- The test jar of the commons is needed for tests because
                  it contains the test categories. -->
-            <groupId>de.tum.ei.lkn</groupId>
+            <groupId>de.tum.ei.lkn.eces</groupId>
             <artifactId>master-commons</artifactId>
             <version>1.0.19</version>
             <type>test-jar</type>
