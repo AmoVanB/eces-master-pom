@@ -6,6 +6,15 @@ More details about the ECES framework can be found in the [ECES core repository]
 ### Usage
 
 A project willing to use the ECES framework must use this master pom as parent pom.
+This can be done by adding the following tag in the `pom.xml` file of the project:
+
+```xml
+	<parent>
+		<groupId>de.tum.ei.lkn.eces</groupId>
+		<artifactId>master-pom</artifactId>
+		<version>1.0.19</version>
+	</parent>
+```
 
 Additionally, the project must define a Java template file (under `src/main/java-templates/package/name/`) with the following content:
 
