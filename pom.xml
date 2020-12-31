@@ -2,10 +2,42 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.tum.ei.lkn</groupId>
+    <groupId>de.tum.ei.lkn.eces</groupId>
     <artifactId>pre-master-pom</artifactId>
     <version>1.0.19</version>
     <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Project with common configs from which all projects using the ECES framework should inherit</description>
+    <url>http://www.example.com/example-application</url>
+
+    <scm>
+        <connection>scm:git:git://github.com/amovanb/eces-master-pom.git</connection>
+        <developerConnection>scm:git:ssh://github.com:amovanb/eces-master-pom.git</developerConnection>
+        <url>http://github.com/amovanb/eces-master-pom/tree/master</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Amaury Van Bemten</name>
+            <email>amaury.van-bemten@tum.de</email>
+            <organization>Technical University of Munich - Chair of Communication Networks</organization>
+            <organizationUrl>https://www.ei.tum.de/en/lkn/home/</organizationUrl>
+        </developer>
+        <developer>
+            <name>Jochen Guck</name>
+            <email>guck@tum.de</email>
+            <organization>Technical University of Munich - Chair of Communication Networks</organization>
+            <organizationUrl>https://www.ei.tum.de/en/lkn/home/</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,6 +75,20 @@
                 </executions>
             </plugin>
             <plugin>
+                <!-- deploy to the OSSRH Nexus Repository Manager
+                     and release to the Maven Central Repository
+                     with the Nexus Staging Maven plugin -->
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
                 <!-- Generates the Version.java class for each artifact.
                      This file will automatically define static strings
                      containing the group id, artifact id and version of
@@ -73,7 +119,7 @@
                     <pushHotfixes>true</pushHotfixes>
                     <pushReleases>true</pushReleases>
                     <!-- The plugin should not deploy. This is done by
-                         Gitlab CI. -->
+                         Github CI. -->
                     <noDeploy>true</noDeploy>
                     <flowInitContext>
                         <masterBranchName>master</masterBranchName>
@@ -98,6 +144,60 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <!-- Generate Javadoc/Source jar files and sign the components
+                 with a GPG key to fulfill the requirements to push to the
+                 Central Repository. -->
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <dependencies>
         <!-- Configuration framework-->
         <dependency>
@@ -119,32 +219,11 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <!-- Fetch maven artifacts (both releases and snapshots) from LKN server -->
-            <id>snapshots</id>
-            <url>http://maven.forschung.lkn.ei.tum.de:8081/artifactory/lkn</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+
     <distributionManagement>
-        <!-- Allow maven to deploy releases (i.e., master branch)... -->
-        <repository>
-            <id>internal</id>
-            <name>internal</name>
-            <url>http://maven.forschung.lkn.ei.tum.de:8081/artifactory/lkn</url>
-        </repository>
-        <!-- ... and snapshots (i.e., develop branch) -->
         <snapshotRepository>
-            <id>snapshot</id>
-            <name>snapshot</name>
-            <url>http://maven.forschung.lkn.ei.tum.de:8081/artifactory/lkn</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

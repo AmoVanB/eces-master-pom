@@ -1,6 +1,24 @@
 ## Master POM
 
-The project defines the configuration from which all projects should inherit.
+The project defines the configuration from which all projects using the ECES framework should inherit.
+More details about the ECES framework can be found in the [ECES core repository](https://github.com/AmoVanB/eces-core).
+
+### Usage
+
+A project willing to use the ECES framework must use this master pom as parent pom.
+
+Additionally, the project must define a Java template file (under `src/main/java-templates/package/name/`) with the following content:
+
+```java
+public final class Version {
+	public static final String VERSION = "${project.version}";
+	public static final String GROUPID = "${project.groupId}";
+	public static final String ARTIFACTID = "${project.artifactId}";
+	public static final String FQID = GROUPID + "." + ARTIFACTID;
+}
+```
+
+See other ECES repositories, e.g., the [ECES core repository](https://github.com/AmoVanB/eces-core), for examples.
 
 ### `pre-master-pom`
 
@@ -9,12 +27,12 @@ POM configuration which does not require the `commons` module.
 This includes:
 - _Java 8_.
 - _JAR plugin_.
-- _`Version.java` generation plugin_. This plugin generates, from a `Version.java` template file (see the `project-template` project for an example), a `Version.java` containing the group ID, artifact ID and version of the compiled project.
-- _Gitflow plugin_. See the `project-template` documentation for usage guidelines.
+- _`Version.java` generation plugin_.
+  This plugin generates, from a `Version.java` template file, a `Version.java` containing the group ID, artifact ID and version of the compiled project.
+- _Gitflow plugin_.
 - _Configuration framework dependency_ (`org.aeonbits.owner`).
 - _Logging framework dependency_ (`log4j`).
 - _Testing framework dependency_ (`junit`).
-- Configuration of the LKN repository/artifactory server (`http://maven.forschung.lkn.ei.tum.de:8081`).
 
 ### `commons`
 
