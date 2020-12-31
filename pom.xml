@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.tum.ei.lkn</groupId>
+    <artifactId>pre-master-pom</artifactId>
+    <version>1.0.19</version>
+    <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <!-- DIRECTORY names of the submodules -->
+	    <module>master-commons</module>
+        <module>master-pom</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Use Java 8 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- Jar creation plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Generates the Version.java class for each artifact.
+                     This file will automatically define static strings
+                     containing the group id, artifact id and version of
+                     the module. -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-version-class</id>
+                        <goals>
+                            <goal>filter-sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Plugin for maven to handle the gitflow procedures -->
+                <groupId>io.ultreia.java4all.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0.0-rc-1</version>
+                <configuration>
+                    <!-- Automatically update the versions of the submodules
+                         of the pre-master-pom. -->
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <allowUntracked>true</allowUntracked>
+                    <pushFeatures>true</pushFeatures>
+                    <pushHotfixes>true</pushHotfixes>
+                    <pushReleases>true</pushReleases>
+                    <!-- The plugin should not deploy. This is done by
+                         Gitlab CI. -->
+                    <noDeploy>true</noDeploy>
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>develop</developBranchName>
+                        <featureBranchPrefix>feature-</featureBranchPrefix>
+                        <releaseBranchPrefix>release-</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+                        <versionTagPrefix>${project.artifactId}-
+                        </versionTagPrefix>
+                    </flowInitContext>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- Surefire plugin for tests -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20</version>
+                <configuration>
+                    <!-- see: https://stackoverflow.com/questions/53010200/maven-surefire-could-not-find-forkedbooter-class -->
+                    <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <!-- Configuration framework-->
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <!-- Logging framework -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <!-- Testing framework -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <!-- Fetch maven artifacts (both releases and snapshots) from LKN server -->
+            <id>snapshots</id>
+            <url>http://maven.forschung.lkn.ei.tum.de:8081/artifactory/lkn</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <!-- Allow maven to deploy releases (i.e., master branch)... -->
+        <repository>
+            <id>internal</id>
+            <name>internal</name>
+            <url>http://maven.forschung.lkn.ei.tum.de:8081/artifactory/lkn</url>
+        </repository>
+        <!-- ... and snapshots (i.e., develop branch) -->
+        <snapshotRepository>
+            <id>snapshot</id>
+            <name>snapshot</name>
+            <url>http://maven.forschung.lkn.ei.tum.de:8081/artifactory/lkn</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
