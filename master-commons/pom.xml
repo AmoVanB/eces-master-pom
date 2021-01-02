@@ -5,10 +5,10 @@
 	<parent>
         <groupId>de.tum.ei.lkn.eces</groupId>
         <artifactId>pre-master-pom</artifactId>
-        <version>1.0.20-SNAPSHOT</version>
+        <version>1.0.21-SNAPSHOT</version>
     </parent>
 
     <artifactId>master-commons</artifactId>
-    <version>1.0.20-SNAPSHOT</version>
+    <version>1.0.21-SNAPSHOT</version>
 
 </project>
