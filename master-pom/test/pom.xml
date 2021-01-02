@@ -8,9 +8,9 @@
         <version>1.0.19</version>
     </parent>
 
-    <!-- Sub-project of the master-pom which allows to test it.
-    This will for example fail if the master-pom configuration is wrong. -->
     <artifactId>test</artifactId>
     <version>1.0.19</version>
+
+    <description>Sub-project of the master-pom which allows to test it. This will for example fail if the master-pom configuration is wrong.</description>
 
 </project>
