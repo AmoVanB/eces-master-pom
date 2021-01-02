@@ -4,10 +4,10 @@
     <parent>
         <groupId>de.tum.ei.lkn.eces</groupId>
         <artifactId>pre-master-pom</artifactId>
-        <version>1.0.20-SNAPSHOT</version>
+        <version>1.0.20</version>
     </parent>
     <artifactId>master-pom</artifactId>
-    <version>1.0.20-SNAPSHOT</version>
+    <version>1.0.20</version>
     <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
 
     <modules>
@@ -23,14 +23,14 @@
         <dependency>
             <groupId>de.tum.ei.lkn.eces</groupId>
             <artifactId>master-commons</artifactId>
-            <version>1.0.20-SNAPSHOT</version>
+            <version>1.0.20</version>
         </dependency>
         <dependency>
             <!-- The test jar of the commons is needed for tests because
                  it contains the test categories. -->
             <groupId>de.tum.ei.lkn.eces</groupId>
             <artifactId>master-commons</artifactId>
-            <version>1.0.20-SNAPSHOT</version>
+            <version>1.0.20</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
