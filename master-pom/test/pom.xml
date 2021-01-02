@@ -5,11 +5,11 @@
     <parent>
         <groupId>de.tum.ei.lkn.eces</groupId>
         <artifactId>master-pom</artifactId>
-        <version>1.0.20</version>
+        <version>1.0.21-SNAPSHOT</version>
     </parent>
 
     <artifactId>test</artifactId>
-    <version>1.0.20</version>
+    <version>1.0.21-SNAPSHOT</version>
 
     <description>Sub-project of the master-pom which allows to test it. This will for example fail if the master-pom configuration is wrong.</description>
 
