@@ -4,7 +4,7 @@
 
     <groupId>de.tum.ei.lkn.eces</groupId>
     <artifactId>pre-master-pom</artifactId>
-    <version>1.0.19</version>
+    <version>1.0.20</version>
     <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
 
     <name>${project.groupId}:${project.artifactId}</name>
