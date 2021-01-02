@@ -8,8 +8,8 @@
     <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Project with common configs from which all projects using the ECES framework should inherit</description>
-    <url>http://www.example.com/example-application</url>
+    <description>Project with common configs from which all projects using the ECES framework should inherit. The ECES framework is implemented in the de.tum.ei.lkn.eces.core artifact.</description>
+    <url>https://github.com/AmoVanB/eces-master-pom</url>
 
     <scm>
         <connection>scm:git:git://github.com/amovanb/eces-master-pom.git</connection>
