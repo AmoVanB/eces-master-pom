@@ -45,7 +45,7 @@
 
     <modules>
         <!-- DIRECTORY names of the submodules -->
-	    <module>master-commons</module>
+	    <module>master-pom-commons</module>
         <module>master-pom</module>
     </modules>
 
