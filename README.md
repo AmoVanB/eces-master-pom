@@ -12,7 +12,7 @@ This can be done by adding the following tag in the `pom.xml` file of the projec
 	<parent>
 		<groupId>de.tum.ei.lkn.eces</groupId>
 		<artifactId>master-pom</artifactId>
-		<version>1.0.19</version>
+		<version>X.Y.Z</version>
 	</parent>
 ```
 
