@@ -4,7 +4,7 @@
 
     <groupId>de.tum.ei.lkn.eces</groupId>
     <artifactId>pre-master-pom</artifactId>
-    <version>1.0.20</version>
+    <version>1.0.21</version>
     <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -45,7 +45,7 @@
 
     <modules>
         <!-- DIRECTORY names of the submodules -->
-	    <module>master-commons</module>
+	    <module>master-pom-commons</module>
         <module>master-pom</module>
     </modules>
 

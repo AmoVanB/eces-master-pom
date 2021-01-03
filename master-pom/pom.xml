@@ -4,14 +4,14 @@
     <parent>
         <groupId>de.tum.ei.lkn.eces</groupId>
         <artifactId>pre-master-pom</artifactId>
-        <version>1.0.20</version>
+        <version>1.0.21</version>
     </parent>
     <artifactId>master-pom</artifactId>
-    <version>1.0.20</version>
+    <version>1.0.21</version>
     <packaging>pom</packaging>  <!-- To be able to set as parent pom -->
 
     <modules>
-        <module>test</module>
+        <module>master-pom-test</module>
     </modules>
 
     <!-- Because the commons inherit from the master-pom and the master-pom
@@ -22,15 +22,15 @@
     <dependencies>
         <dependency>
             <groupId>de.tum.ei.lkn.eces</groupId>
-            <artifactId>master-commons</artifactId>
-            <version>1.0.20</version>
+            <artifactId>master-pom-commons</artifactId>
+            <version>1.0.21</version>
         </dependency>
         <dependency>
             <!-- The test jar of the commons is needed for tests because
                  it contains the test categories. -->
             <groupId>de.tum.ei.lkn.eces</groupId>
-            <artifactId>master-commons</artifactId>
-            <version>1.0.20</version>
+            <artifactId>master-pom-commons</artifactId>
+            <version>1.0.21</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -61,7 +61,7 @@
                         <include>**/*.class</include>
                     </includes>
                     <excludedGroups>
-                        de.tum.ei.lkn.commons.junitclasses.IntegrationTest.class,de.tum.ei.lkn.commons.junitclasses.PerformanceTest.class
+                        de.tum.ei.lkn.eces.commons.junitclasses.IntegrationTest.class,de.tum.ei.lkn.eces.commons.junitclasses.PerformanceTest.class
                     </excludedGroups>
                 </configuration>
             </plugin>
@@ -80,7 +80,7 @@
                     <!-- see: https://stackoverflow.com/questions/53010200/maven-surefire-could-not-find-forkedbooter-class -->
                     <argLine>-XX:MaxPermSize=512m -Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
                     <groups>
-                        de.tum.ei.lkn.commons.junitclasses.IntegrationTest.class,de.tum.ei.lkn.commons.junitclasses.PerformanceTest.class
+                        de.tum.ei.lkn.eces.commons.junitclasses.IntegrationTest.class,de.tum.ei.lkn.eces.commons.junitclasses.PerformanceTest.class
                     </groups>
                 </configuration>
                 <executions>
